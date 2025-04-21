@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Places_API.Services
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
         private readonly PlacesDbContext _dbContext;
         private readonly IConfiguration _configuration;

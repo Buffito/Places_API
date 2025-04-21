@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using Places_API.Data;
-using System.Text; 
+using Places_API.Models;
+using Places_API.Services;
+using System.Text;
+using SQLitePCL;
 
+Batteries.Init();
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,8 +17,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(); // Ensure Swashbuckle.AspNetCore package is installed
 builder.Services.AddDbContext<PlacesDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))); // Ensure Microsoft.EntityFrameworkCore.SqlServer package is installed
-builder.Services.AddScoped<IAuthService, AuthService>();
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))); builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
