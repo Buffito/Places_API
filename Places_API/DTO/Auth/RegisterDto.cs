@@ -1,4 +1,4 @@
-﻿namespace Places_API.DTO
+﻿namespace Places_API.DTO.Auth
 {
     public class RegisterDto
     {

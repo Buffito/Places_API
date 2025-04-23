@@ -1,6 +1,6 @@
-﻿using Places_API.DTO;
+﻿using Places_API.DTO.Auth;
 
-namespace Places_API.Services
+namespace Places_API.Services.Auth
 {
     public interface IAuthService
     {

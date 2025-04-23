@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Places_API.Data;
-using Places_API.DTO;
+using Places_API.DTO.Auth;
 using Places_API.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace Places_API.Services
+namespace Places_API.Services.Auth
 {
     public class AuthService : IAuthService
     {
@@ -19,7 +19,7 @@ namespace Places_API.Services
         {
             _dbContext = dbContext;
             _configuration = configuration;
-            this._passwordHasher = passwordHasher;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<AuthResult> RegisterUserAsync(RegisterDto registerDto)
@@ -68,9 +68,9 @@ namespace Places_API.Services
                     new System.Security.Claims.Claim("username", user.Username)
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
-                SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(
-                    new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(key),
-                    Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(
+                    new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

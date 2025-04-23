@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Places_API.DTO;
-using Places_API.Services;
+using Places_API.DTO.Auth;
+using Places_API.Services.Auth;
 
 namespace Places_API.Controllers
 {
