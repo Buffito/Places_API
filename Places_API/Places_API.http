@@ -1,6 +1,91 @@
 @Places_API_HostAddress = http://localhost:5242
 
-GET {{Places_API_HostAddress}}/weatherforecast/
+### Place Endpoints ###
+
+### Get all places
+GET {{Places_API_HostAddress}}/api/place
 Accept: application/json
+
+###
+
+### Get a place by ID
+GET {{Places_API_HostAddress}}/api/place/1
+Accept: application/json
+
+###
+
+### Create a new place
+POST {{Places_API_HostAddress}}/api/place
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Sample Place",
+  "categoryId": 1,
+  "address": "123 Main St",
+  "description": "A sample description",
+  "googleMapsUrl": "https://maps.google.com",
+  "visited": false
+}
+
+###
+
+### Update a place by ID
+PUT {{Places_API_HostAddress}}/api/place/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Updated Place",
+  "categoryId": 2,
+  "address": "456 Updated St",
+  "description": "An updated description",
+  "googleMapsUrl": "https://maps.google.com",
+  "visited": true
+}
+
+###
+
+### Delete a place by ID
+DELETE {{Places_API_HostAddress}}/api/place/1
+Accept: application/json
+
+###
+
+### Mark a place as visited
+PATCH {{Places_API_HostAddress}}/api/place/1/visit
+Accept: application/json
+
+###
+
+### Mark a place as unvisited
+PATCH {{Places_API_HostAddress}}/api/place/1/unvisit
+Accept: application/json
+
+###
+
+### Category Endpoints ###
+
+### Get all categories
+GET {{Places_API_HostAddress}}/api/category
+Accept: application/json
+
+###
+
+### Get a category by ID
+GET {{Places_API_HostAddress}}/api/category/1
+Accept: application/json
+
+###
+
+### Create a new category
+POST {{Places_API_HostAddress}}/api/category
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Sample Category",
+  "iconUrl": "https://example.com/icon.png"
+}
 
 ###

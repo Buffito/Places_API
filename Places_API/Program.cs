@@ -7,6 +7,8 @@ using System.Text;
 using SQLitePCL;
 using Places_API.Services.Auth;
 using Places_API.Services.Place;
+using AutoMapper;
+using Places_API.DTO;
 
 Batteries.Init();
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,11 @@ builder.Services.AddDbContext<PlacesDbContext>(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPlaceService, PlaceService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+builder.Services.AddSingleton(new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+}).CreateMapper());
 
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
