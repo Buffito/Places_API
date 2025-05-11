@@ -89,3 +89,30 @@ Accept: application/json
 }
 
 ###
+
+### Auth Endpoints ###
+
+### Register a new user
+POST {{Places_API_HostAddress}}/api/auth/register
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "newuser",
+  "password": "SecurePassword123",
+  "confirmpassword": "SecurePassword123"
+}
+
+###
+
+### Login a user
+POST {{Places_API_HostAddress}}/api/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "newuser",
+  "password": "SecurePassword123"
+}
+
+###

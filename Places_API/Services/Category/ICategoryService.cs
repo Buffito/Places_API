@@ -1,5 +1,4 @@
 ﻿using Places_API.DTO.Category;
-using Places_API.DTO.Place;
 
 namespace Places_API.Services.Category
 {
