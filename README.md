@@ -39,6 +39,13 @@ The **Places API** is a RESTful web service built with ASP.NET Core targeting .N
 | GET    | `/api/category/{id}`      | Get a category by ID           |
 | POST   | `/api/category`           | Create a new category          |
 
+### Auth Endpoints
+
+| Method | Endpoint                  | Description                     |
+|--------|---------------------------|---------------------------------|
+| POST   | `/api/auth/login`         | Login                           |
+| POST   | `/api/auth/register`      | Register                        |
+
 ## Setup Instructions
 
 1. **Clone the Repository**:
