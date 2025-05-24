@@ -33,9 +33,8 @@ namespace Places_API.Services.Auth
             var user = new User
             {
                 Username = registerDto.Username,
+                PasswordHash = _passwordHasher.HashPassword(null, registerDto.Password)
             };
-
-            user.PasswordHash = _passwordHasher.HashPassword(user, registerDto.Password);
 
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
@@ -49,9 +48,11 @@ namespace Places_API.Services.Auth
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Username == loginDto.Username);
             if (user == null)
                 return new AuthResult { Success = false, Message = "Invalid username or password" };
+
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, loginDto.Password);
             if (result == PasswordVerificationResult.Failed)
                 return new AuthResult { Success = false, Message = "Invalid username or password" };
+
             var token = GenerateJwtToken(user);
             return new AuthResult { Success = true, Token = token };
         }
@@ -59,7 +60,11 @@ namespace Places_API.Services.Auth
         private string GenerateJwtToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+            var key = _configuration["Jwt:Key"];
+            if (string.IsNullOrEmpty(key))
+                throw new InvalidOperationException("JWT Key is not configured.");
+
+            var keyBytes = Encoding.ASCII.GetBytes(key);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(new[]
@@ -69,7 +74,7 @@ namespace Places_API.Services.Auth
                 }),
                 Expires = DateTime.UtcNow.AddHours(1),
                 SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key),
+                    new SymmetricSecurityKey(keyBytes),
                     SecurityAlgorithms.HmacSha256Signature)
             };
 

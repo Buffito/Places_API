@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Places_API.Data;
 using Places_API.DTO.Category;
+using Places_API.Models;
 
 namespace Places_API.Services.Category
 {
@@ -24,17 +25,16 @@ namespace Places_API.Services.Category
             return _mapper.Map<CategoryDto>(category);
         }
 
-        public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
-        {
-            var categories = await _dbContext.Categories.ToListAsync();
-            return _mapper.Map<IEnumerable<CategoryDto>>(categories);
-        }
-
         public async Task<CategoryDto> GetCategoryByIdAsync(int id)
         {
             var category = await _dbContext.Categories.FindAsync(id);
             return category == null ? null : _mapper.Map<CategoryDto>(category);
         }
 
+        public async Task<IEnumerable<CategoryDto>> GetAllCategoriesAsync()
+        {
+            var categories = await _dbContext.Categories.ToListAsync();
+            return _mapper.Map<IEnumerable<CategoryDto>>(categories);
+        }
     }
 }

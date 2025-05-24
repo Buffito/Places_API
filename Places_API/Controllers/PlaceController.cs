@@ -16,25 +16,25 @@ namespace Places_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() =>
+        public async Task<ActionResult<IEnumerable<PlaceDto>>> GetAll() =>
             Ok(await _placeService.GetAllPlacesAsync());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<ActionResult<PlaceDto>> Get(int id)
         {
             var result = await _placeService.GetPlaceByIdAsync(id);
             return result == null ? NotFound() : Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreatePlaceDto dto)
+        public async Task<ActionResult<PlaceDto>> Create([FromBody] CreatePlaceDto dto)
         {
             var created = await _placeService.CreatePlaceAsync(dto);
             return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UpdatePlaceDto dto)
+        public async Task<ActionResult<PlaceDto>> Update(int id, [FromBody] UpdatePlaceDto dto)
         {
             var updatedPlace = await _placeService.UpdatePlaceAsync(id, dto);
             return updatedPlace == null ? NotFound() : Ok(updatedPlace);
@@ -51,5 +51,15 @@ namespace Places_API.Controllers
         [HttpPatch("{id}/unvisit")]
         public async Task<IActionResult> Unvisit(int id) =>
             await _placeService.MarkUnvisitedAsync(id) ? NoContent() : NotFound();
+
+        [HttpPatch("{id}/rate")]
+        public async Task<IActionResult> Rate(int id, [FromBody] int starRating)
+        {
+            if (starRating < 1 || starRating > 5)
+                return BadRequest("Star rating must be between 1 and 5.");
+
+            var updated = await _placeService.UpdateStarRatingAsync(id, starRating);
+            return updated ? NoContent() : NotFound();
+        }
     }
 }

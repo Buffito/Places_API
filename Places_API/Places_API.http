@@ -1,6 +1,6 @@
 @Places_API_HostAddress = http://localhost:5242
 
-### Place Endpoints ###
+### -------------------- Place Endpoints --------------------
 
 ### Get all places
 GET {{Places_API_HostAddress}}/api/place
@@ -25,7 +25,8 @@ Accept: application/json
   "address": "123 Main St",
   "description": "A sample description",
   "googleMapsUrl": "https://maps.google.com",
-  "visited": false
+  "visited": false,
+  "starRating": 4
 }
 
 ###
@@ -41,7 +42,8 @@ Accept: application/json
   "address": "456 Updated St",
   "description": "An updated description",
   "googleMapsUrl": "https://maps.google.com",
-  "visited": true
+  "visited": true,
+  "starRating": 5
 }
 
 ###
@@ -64,7 +66,16 @@ Accept: application/json
 
 ###
 
-### Category Endpoints ###
+### Update star rating for a place
+PATCH {{Places_API_HostAddress}}/api/place/1/rate
+Content-Type: application/json
+Accept: application/json
+
+5
+
+###
+
+### -------------------- Category Endpoints --------------------
 
 ### Get all categories
 GET {{Places_API_HostAddress}}/api/category
@@ -90,7 +101,7 @@ Accept: application/json
 
 ###
 
-### Auth Endpoints ###
+### -------------------- Auth Endpoints --------------------
 
 ### Register a new user
 POST {{Places_API_HostAddress}}/api/auth/register
@@ -100,7 +111,7 @@ Accept: application/json
 {
   "username": "newuser",
   "password": "SecurePassword123",
-  "confirmpassword": "SecurePassword123"
+  "confirmPassword": "SecurePassword123"
 }
 
 ###

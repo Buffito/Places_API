@@ -4,9 +4,9 @@ using Places_API.Services.Category;
 
 namespace Places_API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : Controller
+    [Route("api/[controller]")]
+    public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
 
@@ -16,24 +16,21 @@ namespace Places_API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var categories = await _categoryService.GetAllCategoriesAsync();
-            return Ok(categories);
-        }
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetAll() =>
+            Ok(await _categoryService.GetAllCategoriesAsync());
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<ActionResult<CategoryDto>> Get(int id)
         {
-            var category = await _categoryService.GetCategoryByIdAsync(id);
-            return category == null ? NotFound() : Ok(category);
+            var result = await _categoryService.GetCategoryByIdAsync(id);
+            return result == null ? NotFound() : Ok(result);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateCategoryDto dto)
+        public async Task<ActionResult<CategoryDto>> Create([FromBody] CreateCategoryDto dto)
         {
-            var createdCategory = await _categoryService.CreateCategoryAsync(dto);
-            return CreatedAtAction(nameof(Get), new { id = createdCategory.Id }, createdCategory);
+            var created = await _categoryService.CreateCategoryAsync(dto);
+            return CreatedAtAction(nameof(Get), new { id = created.Id }, created);
         }
     }
 }

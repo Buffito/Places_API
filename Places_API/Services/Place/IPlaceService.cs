@@ -11,5 +11,6 @@ namespace Places_API.Services.Place
         Task<bool> DeletePlaceAsync(int id);
         Task<bool> MarkVisitedAsync(int id);
         Task<bool> MarkUnvisitedAsync(int id);
+        Task<bool> UpdateStarRatingAsync(int id, int starRating);
     }
 }
