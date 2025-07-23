@@ -49,20 +49,29 @@ The **Places API** is a RESTful web service built with ASP.NET Core targeting .N
 ## Setup Instructions
 
 1. **Clone the Repository**:
-   git clone <repository-url> cd Places_API
-2. **Install Dependencies**:
+   ```sh
+   git clone https://github.com/Buffito/finance-api.git
+   cd Places_API
+   ```
+3. **Install Dependencies**:
    Ensure you have the .NET 8 SDK installed. Then, restore the dependencies:
+   ```sh
    dotnet restore
-3. **Configure the Database**:
+   ```
+5. **Configure the Database**:
    Update the connection string in `appsettings.json` if needed. The default setup uses SQLite.
-4. **Run Migrations**:
+6. **Run Migrations**:
    Apply the database migrations:
+   ```sh
    dotnet ef database update
-5. **Run the Application**:
+   ```
+8. **Run the Application**:
    Start the application:
+   ```sh
    dotnet run
+   ```
 
-6. **Access the API**:
+10. **Access the API**:
    The API will be available at `http://localhost:5242`. Swagger documentation can be accessed at `http://localhost:5242/swagger`.
 
 ## Testing the API
