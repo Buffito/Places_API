@@ -99,5 +99,3 @@ The **Places API** is a RESTful web service built with ASP.NET Core (.NET 8) tha
 
 - Use the included `Places_API.http` file in Visual Studio to test endpoints.
 - Or, use Swagger UI for interactive testing.
-
----
